@@ -1,0 +1,32 @@
+<ion-view title="Playlist">
+  <ion-content class="has-header">
+  <div id="img_container">
+    <img src="http://jsfiddle.net/img/initializing.png"/>
+    <span class="badge badge-assertive">0/2</span>
+</div>
+   <div class="list" ng-repeat="masteryRoot in masteries.tree.Defense">
+      <div class="item item-divider">
+        Tier {{$index}}
+      </div>
+  <a class="item item-thumbnail-left item-text-wrap" ng-click="openPopover($event, mastery.masteryId)" ng-repeat="mastery in masteryRoot" ng-if="mastery!=null">
+      <img style="border:2px solid black" src="http://ddragon.leagueoflegends.com/cdn/4.4.3/img/mastery/{{mastery.masteryId}}.png">
+      <h2 style="font-size:14px">{{masteries.data[mastery.masteryId].name}}</h2>
+      <p style="color:#DB2929;text-decoration: line-through;" ng-if="masteries.data[mastery.masteryId].prereq != '0'">
+        Requires {{masteries.data[masteries.data[mastery.masteryId].prereq].ranks}} points in {{masteries.data[masteries.data[mastery.masteryId].prereq].name}}.
+      </p>
+      <span class="badge badge-assertive">0/{{masteries.data[mastery.masteryId].ranks}}</span>
+  </a>
+</div>
+  </ion-content>
+</ion-view>
+
+<script id="my-popover.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-header-bar>
+      <h1 class="title">{{masteries.data[currentMasteryId].name}}</h1>
+    </ion-header-bar>
+    <ion-content>
+      {{masteries.data[currentMasteryId].description[0]}}
+    </ion-content>
+  </ion-popover-view>
+</script>
