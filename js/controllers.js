@@ -71,7 +71,10 @@ angular.module('starter.controllers', [])
   $scope.goToUrl = function(url) {
     $window.open(url);
   };
-
+  $scope.getTime = function(time) {
+    var sanitizedTime = moment(time);
+    return sanitizedTime.fromNow();
+  };
 
 })
 .controller('PlaylistCtrl', function($scope, $stateParams, $http, $ionicPopover) {

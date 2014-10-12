@@ -3,14 +3,32 @@
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-content class="has-header">
-    <div class="list">
-    	<a style="background-color:#F9BF3B;" class="item item-text-wrap item-button-right" ng-repeat="story in topstories" ng-click="goToUrl(story.url)">
+    <!--<div class="list">
+    	<a style="background-color:#F6F6EF;" ng-repeat="story in topstories" class="item item-text-wrap item-icon-right" ng-click="goToUrl(story.url)">
     		<h2>{{story.score}} - {{story.title}}</h2>
-
-    <button style="background-color:#FDE3A7;" class="button button-small button-stable">
-      {{story.score}}
-    </button>
-  </a>
-    </div>
+        <p>{{story.url}}</p>
+        <i class="ion-ios7-chatbubble-outline"></i>
+      </a>
+    </div>-->
+    <ion-list>
+      <ion-item class="post-list"
+                collection-repeat="story in topstories"
+                collection-item-width="'100%'"
+                collection-item-height="92"
+                ng-class="story.score > 0?'item-icon-right':''"
+                ng-show="story.title.length"
+                >
+      <a ng-if="story.kids != null" class="icon ion-chatbubble light">
+          {{story.kids.length}}
+      </a>
+      <h2>{{story.title}}</h2>
+        <p>
+          <span ng-if="story.score > 0">{{story.score}} points &nbsp;</span>
+          {{getTime(story.time)}} &nbsp;
+          {{story.by}} &nbsp;
+          {{story.url}}
+        </p>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
