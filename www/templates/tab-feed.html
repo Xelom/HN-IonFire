@@ -1,0 +1,33 @@
+<ion-view title="Top Stories">
+  <ion-nav-bar class="bar-energized">
+    <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back"></ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content>
+    <!--
+    <ion-list>
+      <ion-item ng-repeat="friend in friends" type="item-text-wrap" href="#/tab/friend/{{friend.id}}">
+        {{friend.name}}
+      </ion-item>
+    </ion-list>
+  -->
+  <ion-list>
+      <ion-item class="post-list"
+                collection-repeat="story in topstories"
+                collection-item-width="'100%'"
+                collection-item-height="92"
+                ng-class="story.score > 0?'item-icon-right':''"
+                ng-show="story.title.length"
+                >
+      <a ng-if="story.kids != null" class="icon ion-chatbubble light" ng-click="loadComments(story.id)">
+          {{story.kids.length}}
+      </a>
+      <h2>{{story.title}}</h2>
+        <p>
+          <span ng-if="story.score > 0">{{story.score}} points &nbsp;</span>
+          {{story.time|timeago}} &nbsp;
+          {{story.by}} &nbsp;
+        </p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

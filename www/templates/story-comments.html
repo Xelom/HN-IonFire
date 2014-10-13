@@ -1,0 +1,26 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view title="Story Comments">
+  <ion-nav-bar class="bar-energized">
+    <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back"></ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content has-header="true">
+    <ion-list>
+      <!-- not using collection repeat since we have a rather finite amount of results and variable height items -->
+      <ion-item class="item comment"
+                ng-repeat="comment in comments"
+                ng-show="comment.text.length"
+                ng-class="comment.hide?'hidden':''"
+                ng-click="comment.hide = !comment.hide"
+                ng-style="{'padding-left':comment.indent*15+'px'}">
+        <p class="timestamp">{{comment.time|timeago}}</p>
+        <p class="author">{{comment.by}} <i class="icon ion-arrow-down-b"></i></p>
+        <div class="text" ng-bind-html="trust(comment.text)" ng-click="bubbleCheck($event)"></div>
+        <button class="button button-small button-outline button-energized" ng-if="comment.kids.length>0" ng-click="loadMoreComments(comment.id, comment.kids, comment.indent)">{{comment.kids.length}} more comment...</button>
+      </ion-item>
+  </ion-content>
+</ion-view>
