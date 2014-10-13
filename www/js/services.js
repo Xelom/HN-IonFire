@@ -3,24 +3,21 @@ angular.module('starter.services', [])
 /**
  * A simple example service that returns some data.
  */
-.factory('Friends', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var friends = [
-    { id: 0, name: 'Scruff McGruff' },
-    { id: 1, name: 'G.I. Joe' },
-    { id: 2, name: 'Miss Frizzle' },
-    { id: 3, name: 'Ash Ketchum' }
-  ];
+.factory('HNFactory', function($http, $q, $log) {
+  var apiUrl = "https://hacker-news.firebaseio.com/v0/item/";
 
   return {
-    all: function() {
-      return friends;
-    },
-    get: function(friendId) {
-      // Simple index lookup
-      return friends[friendId];
+    getItem: function(itemId) {
+      var deferred = $q.defer();
+      $http.get(apiUrl+itemId+'.json')
+        .success(function(data) {
+            deferred.resolve(data);
+          })
+        .error(function(msg, code) {
+            deferred.reject(msg);
+            $log.error(msg, code);
+        });
+      return deferred.promise;
     }
   }
 });
