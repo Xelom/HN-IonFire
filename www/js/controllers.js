@@ -1,15 +1,14 @@
-angular.module('starter.controllers', [])
+angular.module('hnIonFire.controllers', [])
 
-.controller('FeedCtrl', function($scope,$state, $firebase, $window, $ionicLoading) {
+.controller('FeedCtrl', function($scope,$state, $firebase, $window, $ionicLoading, HNFactory) {
   $scope.topstories = [];
-  var ref = new Firebase("https://hacker-news.firebaseio.com/v0/topstories");
-  var sync = $firebase(ref);
-  var topstoriesRef = sync.$asArray();
+  var ref = new Firebase(HNFactory.getApiUrl()).child("topstories");
+  var topstoriesRef = $firebase(ref).$asArray();
   $ionicLoading.show({
     template: 'Fetching Top Stories...'
   });
   var addStory = function(story, isNew) {
-      var refStory = new Firebase("https://hacker-news.firebaseio.com/v0/item").child(story.$value);
+      var refStory = new Firebase(HNFactory.getApiUrl()).child("item").child(story.$value);
       var storyRef = $firebase(refStory).$asObject();
       if(isNew) {
         $scope.topstories.splice(story.$id,0,storyRef);
@@ -37,8 +36,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('CommentsCtrl', function($scope, $stateParams, $firebase, $http, $sce, HNFactory, $ionicLoading) {
-  var apiUrl = "https://hacker-news.firebaseio.com/v0/item/";
+.controller('CommentsCtrl', function($scope, $stateParams, $firebase, $http, $sce, $ionicLoading, HNFactory) {
   $scope.comments = [];
   $ionicLoading.show({
     template: 'Fetching latest comments for you...'

@@ -1,6 +1,6 @@
-angular.module('starter', ['ngAnimate','ionic', 'starter.controllers', 'starter.services', 'firebase', 'hnIonFire.filters'])
+angular.module('hnIonFire', ['ngAnimate','ionic', 'hnIonFire.controllers', 'hnIonFire.services', 'firebase', 'hnIonFire.filters'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $templateCache, $http) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -9,8 +9,18 @@ angular.module('starter', ['ngAnimate','ionic', 'starter.controllers', 'starter.
     }
     if(window.StatusBar) {
       // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
+      StatusBar.styleLightContent();
     }
+    if(navigator.splashscreen){
+      navigator.splashscreen.hide();
+    }
+    var templates = [
+      "feed",
+      "story-comments"
+    ];
+    templates.forEach(function(tpl){
+      $http.get('templates/'+tpl+'.html', { cache: $templateCache });
+    });
   });
 })
 
