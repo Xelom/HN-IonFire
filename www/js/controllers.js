@@ -1,10 +1,13 @@
 angular.module('starter.controllers', [])
 
-.controller('FeedCtrl', function($scope,$state, $firebase, $window) {
+.controller('FeedCtrl', function($scope,$state, $firebase, $window, $ionicLoading) {
   $scope.topstories = [];
   var ref = new Firebase("https://hacker-news.firebaseio.com/v0/topstories");
   var sync = $firebase(ref);
   var topstoriesRef = sync.$asArray();
+  $ionicLoading.show({
+    template: 'Fetching Top Stories...'
+  });
   var addStory = function(story, isNew) {
       var refStory = new Firebase("https://hacker-news.firebaseio.com/v0/item").child(story.$value);
       var storyRef = $firebase(refStory).$asObject();
@@ -16,6 +19,7 @@ angular.module('starter.controllers', [])
   };
   topstoriesRef.$loaded()
       .then(function(data) {
+          $ionicLoading.hide();
           angular.forEach(data, function(story){
             addStory(story,true);
           });
@@ -25,7 +29,7 @@ angular.module('starter.controllers', [])
       addStory(topstoriesRef.$getRecord(data.key), false);
     }
   });
-  $scope.goToUrl = function(url) {
+  $scope.openUrl = function(url) {
     $window.open(url);
   };
   $scope.loadComments = function(storyId){
@@ -33,13 +37,16 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('CommentsCtrl', function($scope, $stateParams, $firebase, $http, $sce, HNFactory) {
+.controller('CommentsCtrl', function($scope, $stateParams, $firebase, $http, $sce, HNFactory, $ionicLoading) {
   var apiUrl = "https://hacker-news.firebaseio.com/v0/item/";
   $scope.comments = [];
+  $ionicLoading.show({
+    template: 'Fetching latest comments for you...'
+  });
   var addComment = function(commentId) {
       HNFactory.getItem(commentId).then(function(item){
         item.indent = 0;
-        item.more = 'notYet';
+        item.moreToLoad = 'avail';
         $scope.comments.push(item);
       });
   };
@@ -48,6 +55,7 @@ angular.module('starter.controllers', [])
       angular.forEach(item.kids, function(kiddo) {
         addComment(kiddo);
       });
+      $ionicLoading.hide();
     });
   };
   $scope.trust = function(comment){
@@ -61,7 +69,7 @@ angular.module('starter.controllers', [])
     }
   };
   $scope.loadMoreComments = function(comment) {
-    comment.more = 'loading';
+    comment.moreToLoad = 'loading';
     angular.forEach(comment.kids, function(kiddo) {
       var max = $scope.comments.length;
       HNFactory.getItem(kiddo).then(function(item) {
@@ -69,7 +77,7 @@ angular.module('starter.controllers', [])
         for(var i=0;i<max;i++) {
           if($scope.comments[i].id === comment.id) {
             $scope.comments.splice(i+1,0,item);
-            comment.more = 'done';
+            comment.moreToLoad = 'done';
             break;
           }
         }

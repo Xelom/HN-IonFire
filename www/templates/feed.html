@@ -1,4 +1,4 @@
-<ion-view title="Top Stories">
+<ion-view title="HN-IonFire">
   <ion-nav-bar class="bar-energized">
     <ion-nav-back-button class="button-icon icon ion-ios7-arrow-back"></ion-nav-back-button>
   </ion-nav-bar>
@@ -10,9 +10,13 @@
                 collection-item-height="92"
                 ng-class="story.score > 0?'item-icon-right':''"
                 ng-show="story.title.length"
+                ng-click="openUrl(story.url)"
                 >
       <a ng-if="story.kids != null" class="icon ion-chatbubble light" ng-click="loadComments(story.id)">
           {{story.kids.length}}
+      </a>
+      <a ng-if="story.kids == null" class="icon ion-chatbubble light">
+          -
       </a>
       <h2>{{story.title}}</h2>
         <p>

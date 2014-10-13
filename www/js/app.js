@@ -18,7 +18,7 @@ angular.module('starter', ['ngAnimate','ionic', 'starter.controllers', 'starter.
   $stateProvider
     .state('feed', {
       url: '/feed',
-      templateUrl: 'templates/tab-feed.html',
+      templateUrl: 'templates/feed.html',
       controller: 'FeedCtrl'
     })
     .state('story-comments', {

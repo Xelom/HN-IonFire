@@ -1,7 +1,7 @@
 {
-  "name": "hn",
-  "version": "1.0.0",
-  "description": "HN: An Ionic project",
+  "name": "hn-ionfire",
+  "version": "0.1.0",
+  "description": "HN-IonFire",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^0.7.1",

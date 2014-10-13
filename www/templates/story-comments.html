@@ -12,8 +12,8 @@
         <p class="timestamp">{{comment.time|timeago}}</p>
         <p class="author">{{comment.by}} <i class="icon ion-arrow-down-b"></i></p>
         <div class="text" ng-bind-html="trust(comment.text)" ng-click="bubbleCheck($event)"></div>
-        <button class="button button-small button-outline button-energized" style="margin-top:5px;" ng-if="comment.kids.length>0 && comment.more=='notYet'" ng-click="loadMoreComments(comment)">{{comment.kids.length}} more comment...</button>
-        <button class="button button-small button-outline button-energized" style="margin-top:5px;" ng-if="comment.more=='loading'"><i class="ion-loading-c"></i></button>
+        <button class="button button-small button-outline button-energized" style="margin-top:5px;" ng-if="comment.kids.length>0 && comment.moreToLoad=='avail'" ng-click="loadMoreComments(comment)">{{comment.kids.length}} more comment...</button>
+        <button class="button button-small button-outline button-energized" style="margin-top:5px;" ng-if="comment.moreToLoad=='loading'"><i class="ion-loading-c"></i></button>
       </ion-item>
   </ion-content>
 </ion-view>
