@@ -1,8 +1,5 @@
 angular.module('starter.controllers', [])
 
-.controller('NewsCtrl', function($scope) {
-})
-
 .controller('FeedCtrl', function($scope,$state, $firebase, $window) {
   $scope.topstories = [];
   var ref = new Firebase("https://hacker-news.firebaseio.com/v0/topstories");
@@ -32,7 +29,7 @@ angular.module('starter.controllers', [])
     $window.open(url);
   };
   $scope.loadComments = function(storyId){
-    $state.go('tab.story-comments',{storyId:storyId});
+    $state.go('story-comments',{storyId:storyId});
   }
 })
 
